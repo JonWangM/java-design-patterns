@@ -21,51 +21,37 @@
  * THE SOFTWARE.
  */
 
-package com.iluwatar.objectmother;
+package com.iluwatar.arrangeactassert;
 
 /**
- * Defines all attributes and behaviour related to the King.
+ * Arrange/Act/Assert (AAA) is a unit test pattern. In this simple example, we have a ({@link Cash})
+ * object for plus, minus and counting amount.
  */
-public class King implements Royalty {
-  boolean isDrunk = false;
-  boolean isHappy = false;
+public class Cash {
 
-  @Override
-  public void makeDrunk() {
-    isDrunk = true;
+  private int amount;
+
+  Cash(int amount) {
+    this.amount = amount;
   }
 
-  @Override
-  public void makeSober() {
-    isDrunk = false;
+  //plus
+  void plus(int addend) {
+    amount += addend;
   }
 
-  @Override
-  public void makeHappy() {
-    isHappy = true;
-  }
-
-  @Override
-  public void makeUnhappy() {
-    isHappy = false;
-  }
-
-  public boolean isHappy() {
-    return isHappy;
-  }
-
-  /**
-   * Method to flirt to a queen.
-   *
-   * @param queen Queen which should be flirted.
-   */
-  public void flirt(Queen queen) {
-    var flirtStatus = queen.getFlirted(this);
-    if (!flirtStatus) {
-      this.makeUnhappy();
+  //minus
+  boolean minus(int subtrahend) {
+    if (amount >= subtrahend) {
+      amount -= subtrahend;
+      return true;
     } else {
-      this.makeHappy();
+      return false;
     }
+  }
 
+  //count
+  int count() {
+    return amount;
   }
 }

@@ -21,51 +21,39 @@
  * THE SOFTWARE.
  */
 
-package com.iluwatar.objectmother;
+package com.iluwatar.arrangeactassert;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
- * Defines all attributes and behaviour related to the King.
+ * ({@link CashAAATest}) is an anti-example of AAA pattern. This test is functionally correct, but
+ * with the addition of new feature, it needs refactoring. There are an awful lot of steps in that
+ * test method, but it verifies the class' important behavior in just eleven lines. It violates the
+ * single responsibility principle. If this test method failed after a small code change, it might
+ * take some digging to discover why.
  */
-public class King implements Royalty {
-  boolean isDrunk = false;
-  boolean isHappy = false;
+public class CashAntiAAATest {
 
-  @Override
-  public void makeDrunk() {
-    isDrunk = true;
-  }
-
-  @Override
-  public void makeSober() {
-    isDrunk = false;
-  }
-
-  @Override
-  public void makeHappy() {
-    isHappy = true;
-  }
-
-  @Override
-  public void makeUnhappy() {
-    isHappy = false;
-  }
-
-  public boolean isHappy() {
-    return isHappy;
-  }
-
-  /**
-   * Method to flirt to a queen.
-   *
-   * @param queen Queen which should be flirted.
-   */
-  public void flirt(Queen queen) {
-    var flirtStatus = queen.getFlirted(this);
-    if (!flirtStatus) {
-      this.makeUnhappy();
-    } else {
-      this.makeHappy();
-    }
-
+  @Test
+  public void testCash() {
+    //initialize
+    var cash = new Cash(3);
+    //test plus
+    cash.plus(4);
+    assertEquals(cash.count(), 7);
+    //test minus
+    cash = new Cash(8);
+    assertTrue(cash.minus(5));
+    assertEquals(cash.count(), 3);
+    assertFalse(cash.minus(6));
+    assertEquals(cash.count(), 3);
+    //test update
+    cash.plus(5);
+    assertTrue(cash.minus(5));
+    assertEquals(cash.count(), 3);
   }
 }
